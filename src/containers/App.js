@@ -5,6 +5,14 @@ import Scroll from '../components/Scroll';
 import './App.css';
 import ErrorBoundry from '../components/ErrorBoundry'
 //import { robots } from './robots';
+import {setSearchField} from '../actions';
+import {connect} from 'react-dedux';
+
+const mapStateToProps = state =>{
+    return{
+        searchfield: state.searchRobots.searchfield
+    }
+}
 
 class App extends Component{
     constructor(){
@@ -42,4 +50,4 @@ class App extends Component{
     }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

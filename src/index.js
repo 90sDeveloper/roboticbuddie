@@ -7,9 +7,16 @@ import * as serviceWorker from './serviceWorker';
 //import CardList from './CardList';
 //import { robots } from './robots';
 //import Card from './Card';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+import {searchRobots} from './reducers';
+
+const store = createStore(searchRobots)
 
 ReactDOM.render(
-  <App/>,
+  <Provider store={store}>
+    <App/>
+  </Provider>,
   document.getElementById('root')
 );
 
