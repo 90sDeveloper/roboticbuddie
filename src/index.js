@@ -1,20 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './containers/App';
-import 'tachyons';
-import * as serviceWorker from './serviceWorker';
-//import CardList from './CardList';
-//import { robots } from './robots';
-//import Card from './Card';
-import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
-import { createLogger} from 'redux-logger';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
-import {searchRobots} from './reducers';
+import { createLogger } from 'redux-logger';
+import 'tachyons';
 
-const logger =createLogger()
-const store = createStore(searchRobots, applyMiddleware(thunkMiddleware,logger))
+import App from './containers/App';
+import registerServiceWorker from './registerServiceWorker';
+import { requestRobots, searchRobots } from './reducers'
+
+import './index.css';
+
+const logger = createLogger() 
+
+const rootReducers = combineReducers({requestRobots, searchRobots})
+
+const store = createStore(rootReducers, applyMiddleware(thunkMiddleware, logger))
 
 ReactDOM.render(
   <Provider store={store}>
@@ -22,8 +24,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+registerServiceWorker();
